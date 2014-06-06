@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>getUserMedia Example</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <h1>getUserMedia Example</h1>
+  <video id="vid1" autoplay></video>
+  <br>
+  <button id="btn1">Start</button>
+  <script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      var vid1 = $("#vid1")[0];
+      var btn1 = $("#btn1")[0];
+      
+      $(btn1).click(start);
+
+      navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUserMedia || navigator.mozGetUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia;
+      URL = window.URL || window.webkitURL || window.mozURL || window.oURL || window.msURL;
+      
+      function start() {
+        $(btn1).attr('disabled', true);
+        navigator.getUserMedia({audio:true, video:true}, gotStream, function(err) {console(err);});
+      }
+      
+      function gotStream(stream){
+        vid1.src = URL.createObjectURL(stream);
+      }
+    });
+  </script>
+</body>
+</html>
